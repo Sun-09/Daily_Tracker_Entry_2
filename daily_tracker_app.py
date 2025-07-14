@@ -68,7 +68,10 @@ start_idx = (page - 1) * view_size
 end_idx = start_idx + view_size
 selected_dates = dates[start_idx:end_idx]
 
-values = [data[d]["value"] for d in selected_dates]
+values = [data[d].get("value", 0) for d in selected_dates if "value" in data[d]]
+colors = ['green' if data[d].get("yes") else 'red' for d in selected_dates if "value" in data[d]]
+selected_dates = [d for d in selected_dates if "value" in data[d]]
+
 colors = ['green' if data[d]['yes'] else 'red' for d in selected_dates]
 
 fig = go.Figure(data=[
